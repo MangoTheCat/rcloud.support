@@ -6,4 +6,12 @@
 .rc.conf$solr.auth.user <- NULL
 .rc.conf$solr.auth.pwd <- NULL
 
-getConf <- function(name) .rc.conf[[name]]
+#' Get values fro mconfig file
+#'
+#' @param name Name of config element
+#' @return config element
+#'
+#' @export
+getConf <- function(name) {
+  .rc.conf[[name]]
+}
