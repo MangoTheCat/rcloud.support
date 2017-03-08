@@ -11,7 +11,6 @@
 #' @param name Name of config element
 #' @return config element
 #'
-#' @export
 getConf <- function(name) {
   .rc.conf[[name]]
 }
