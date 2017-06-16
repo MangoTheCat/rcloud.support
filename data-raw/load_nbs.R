@@ -14,4 +14,6 @@ nbs_db <- lapply(files, read_one_nb)
 
 names(nbs_db) <- vapply(nbs, extract_nb_id, "a")
 
-use_data(nbs_db, internal = TRUE)
+.nb_db <- list2env(rcloud.support:::nbs_db)
+
+use_data(.nb_db, internal = TRUE)
