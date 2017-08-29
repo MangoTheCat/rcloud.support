@@ -12,7 +12,7 @@
 #' @return config element or NULL if it's not there
 #'
 getConf <- function(name) {
-  if(exist(name, where = .rc_conf)) {
+  if(exists(name, where = .rc_conf)) {
     .rc.conf[[name]]
   } else {
     NULL
