@@ -6,11 +6,15 @@
 .rc.conf$solr.auth.user <- NULL
 .rc.conf$solr.auth.pwd <- NULL
 
-#' Get values fro mconfig file
+#' Get values from config file
 #'
 #' @param name Name of config element
-#' @return config element
+#' @return config element or NULL if it's not there
 #'
 getConf <- function(name) {
-  .rc.conf[[name]]
+  if(exist(name, where = .rc_conf)) {
+    .rc.conf[[name]]
+  } else {
+    NULL
+  }
 }

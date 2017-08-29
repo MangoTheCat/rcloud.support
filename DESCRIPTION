@@ -2,7 +2,7 @@ Package: rcloud.support
 Title: Minimised RCloud Support Functions
 Version: 0.0.0.9000
 Authors@R: person("Douglas", "Ashton", email = "dashton@mango-solutions.com", role = c("aut", "cre"))
-Description: Provide a massive subset of rcloud.support to test packages that depend on it.
+Description: Provide a tiny subset of rcloud.support to test packages that depend on it.
 Depends: R (>= 3.1.2)
 License: MIT + file LICENSE
 Encoding: UTF-8
