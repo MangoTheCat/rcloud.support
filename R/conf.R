@@ -1,20 +1,45 @@
+# this is a near copy of conf.R in the real rcloud.support
 
 ## configuration environment -- loaded from the config file in configure.rcloud()
 .rc.conf <- new.env(parent=emptyenv())
 
+# Override this in a mo
 .rc.conf$solr.url <- "http://solr:8983/solr/rcloudnotebooks"
 .rc.conf$solr.auth.user <- NULL
 .rc.conf$solr.auth.pwd <- NULL
 
-#' Get values from config file
-#'
-#' @param name Name of config element
-#' @return config element or NULL if it's not there
-#'
-getConf <- function(name) {
-  if(exists(name, where = .rc.conf)) {
-    .rc.conf[[name]]
-  } else {
-    NULL
-  }
+
+## --- the following are utility functions used inside rcloud.support, not exported --
+nzConf <- function(name) isTRUE(nzchar(.rc.conf[[name]]))
+getConf <- function(name) .rc.conf[[name]]
+
+setConf <- function(name, value) {
+  .rc.conf[[name]] <- value
+  #if (rcloud.debug.level()) cat("CONFIG: '",name,"'='",value,"'\n",sep='')
+  value
 }
+
+hasConf <- function(name) !is.null(.rc.conf[[name]])
+
+validFileConf <- function(name, ...) nzConf(name) && file.exists(file.path(getConf(name), ...))
+
+absPath <- function(path, anchor = getConf("root")) {
+  if (!is.character(anchor)) anchor <- getwd()
+  ## FIXME: this ignores Windows x:/ notation !
+  if (!isTRUE(grepl("^/", path))) file.path(anchor, path) else path
+}
+
+pathConf <- function(name, ..., anchor = FALSE) {
+  path <- file.path(.rc.conf[[name]], ...)
+  if (is.logical(anchor) && isTRUE(!anchor)) path else absPath(path, anchor)
+}
+keysConf <- function() names(as.list(.rc.conf))
+
+scrubConf <- function(keys, gc=TRUE) {
+  for (i in keys) .rc.conf[[i]] <- NULL
+  ## gc() to purge string cache
+  if (gc) gc()
+}
+
+## --- this one is exported for use outside of rcloud.support ---
+rcloud.config <- function(name) .rc.conf[[name]]
