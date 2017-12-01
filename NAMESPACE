@@ -1,3 +1,4 @@
 exportPattern("^rcloud.*") ## rcloud API
 exportPattern("^w.*")      ## wplot, wdc, wgeo...
 export("configure.rcloud")
+export("rcloud.install.js.module")
